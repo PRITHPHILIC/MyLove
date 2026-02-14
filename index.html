@@ -344,18 +344,17 @@ function backToMenu(){
     <p id="passMsg" style="margin-top:10px;"></p>
 
     <hr style="opacity:0.3">
-
-    <!-- SONG 1 -->
-    <p><u><i>Song 1</i></u></p>
-    <button class="btn" onclick="playTrack('music1.mp3')">Play / Pause</button>
-
-    <!-- SONG 2 -->
-    <p><u><i>Song 2</i></u></p>
-    <button class="btn" onclick="playTrack('Music2.mp3')">Play / Pause</button>
-
-    <!-- SONG 3 -->
-    <p><u><i>Song 3</i></u></p>
-    <button class="btn" onclick="playTrack('Music3.mp3')">Play / Pause</button>
+      <!-- SONG 1 -->
+      <p><u><i>Song 1</i></u></p>
+      <button class="btn music-btn" disabled onclick="playTrack('music1.mp3')">Play / Pause</button>
+      
+      <!-- SONG 2 -->
+      <p><u><i>Song 2</i></u></p>
+      <button class="btn music-btn" disabled onclick="playTrack('Music2.mp3')">Play / Pause</button>
+      
+      <!-- SONG 3 -->
+      <p><u><i>Song 3</i></u></p>
+      <button class="btn music-btn" disabled onclick="playTrack('Music3.mp3')">Play / Pause</button>
 
     <!-- SINGLE AUDIO PLAYER -->
     <audio id="currentTrack" loop preload="auto"></audio>
@@ -365,17 +364,22 @@ function backToMenu(){
 </div>
 <script>
 let musicUnlocked = false;
-const MUSIC_PASSWORD = "puku"; // 🔑 change password here
-let currentSrc = "";
+const MUSIC_PASSWORD = "puku"; // 🔑 change if needed
 
 function unlockMusic(){
   const input = document.getElementById("musicPass").value;
   const msg = document.getElementById("passMsg");
 
-  if(input.toLowerCase()=== MUSIC_PASSWORD.toLowerCase()){
+  if(input === MUSIC_PASSWORD){
     musicUnlocked = true;
     msg.innerText = "Unlocked 💖";
     msg.style.color = "lightgreen";
+
+    // ENABLE SONG BUTTONS
+    document.querySelectorAll(".music-btn").forEach(btn=>{
+      btn.disabled = false;
+    });
+
   } else {
     msg.innerText = "Wrong password 😝";
     msg.style.color = "pink";
@@ -383,7 +387,7 @@ function unlockMusic(){
 }
 
 function playTrack(src){
-  if(!musicUnlocked) return;
+  if(!musicUnlocked) return; // double safety
 
   const audio = document.getElementById("currentTrack");
 
@@ -395,7 +399,6 @@ function playTrack(src){
   }
 }
 </script>
-
 <!-- LOVE LETTER SECTION -->
 <div id="loveLetter" class="screen" style="display:none;">
   <div class="letter-card">
