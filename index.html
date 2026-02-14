@@ -335,17 +335,66 @@ function backToMenu(){
   <div class="card">
     <h2>Our Music 🎵</h2>
     <p>Two songs in my voice. They ain't that good but I tried my best...</p>
+
+    <!-- PASSWORD -->
+    <input id="musicPass" type="password" placeholder="Enter password 💗"
+      style="padding:8px;border-radius:20px;border:none;text-align:center;">
+    <br><br>
+    <button class="btn" onclick="unlockMusic()">Unlock 🎵</button>
+    <p id="passMsg" style="margin-top:10px;"></p>
+
+    <hr style="opacity:0.3">
+
+    <!-- SONG 1 -->
     <p><u><i>Song 1</i></u></p>
     <button class="btn" onclick="playTrack('music1.mp3')">Play / Pause</button>
+
+    <!-- SONG 2 -->
     <p><u><i>Song 2</i></u></p>
     <button class="btn" onclick="playTrack('Music2.mp3')">Play / Pause</button>
-    <audio id="currentTrack" loop preload="auto"></audio>
+
+    <!-- SONG 3 -->
     <p><u><i>Song 3</i></u></p>
-    <button class="btn" onclick="playTrack('Music3.mp3')">Play / Pause </button>
+    <button class="btn" onclick="playTrack('Music3.mp3')">Play / Pause</button>
+
+    <!-- SINGLE AUDIO PLAYER -->
     <audio id="currentTrack" loop preload="auto"></audio>
+
     <button class="back" onclick="backToMenu()">⬅️ Back</button>
   </div>
 </div>
+<script>
+let musicUnlocked = false;
+const MUSIC_PASSWORD = "puku"; // 🔑 change password here
+let currentSrc = "";
+
+function unlockMusic(){
+  const input = document.getElementById("musicPass").value;
+  const msg = document.getElementById("passMsg");
+
+  if(input.toLowerCase()=== MUSIC_PASSWORD.toLowerCase()){
+    musicUnlocked = true;
+    msg.innerText = "Unlocked 💖";
+    msg.style.color = "lightgreen";
+  } else {
+    msg.innerText = "Wrong password 😝";
+    msg.style.color = "pink";
+  }
+}
+
+function playTrack(src){
+  if(!musicUnlocked) return;
+
+  const audio = document.getElementById("currentTrack");
+
+  if(audio.src.includes(src) && !audio.paused){
+    audio.pause();
+  } else {
+    audio.src = src;
+    audio.play().catch(()=>{});
+  }
+}
+</script>
 
 <!-- LOVE LETTER SECTION -->
 <div id="loveLetter" class="screen" style="display:none;">
